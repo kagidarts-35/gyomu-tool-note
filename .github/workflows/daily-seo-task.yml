@@ -2,7 +2,7 @@ name: Daily SEO task
 
 on:
   schedule:
-    - cron: "0 0 * * *"
+    - cron: "0 1 * * *"
   workflow_dispatch:
 
 permissions:
@@ -17,6 +17,10 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TWILIO_FROM_NUMBER: ${{ secrets.TWILIO_FROM_NUMBER }}
+          SMS_TO_NUMBER: ${{ secrets.SMS_TO_NUMBER }}
         run: |
           today="$(TZ=Asia/Tokyo date +%F)"
           weekday="$(TZ=Asia/Tokyo date +%u)"
@@ -59,4 +63,17 @@ jobs:
           esac
 
           body="$(printf '## 今日の重点\n\n%s\n\n## チェックリスト\n\n%b\n\n## 完了条件\n\n- [ ] 今日の重点作業が完了\n- [ ] 変更内容または確認結果をIssueへ記録\n- [ ] 次に行う作業を1行で記録\n\n自動作成: 毎朝9:00 JST' "$focus" "$details")"
-          gh issue create --repo "$GH_REPO" --title "$title" --body "$body" --assignee "kagidarts-35"
+          issue_url="$(gh issue create --repo "$GH_REPO" --title "$title" --body "$body" --assignee "kagidarts-35")"
+
+          if [ -n "$TWILIO_ACCOUNT_SID" ] && [ -n "$TWILIO_AUTH_TOKEN" ] && [ -n "$TWILIO_FROM_NUMBER" ] && [ -n "$SMS_TO_NUMBER" ]; then
+            curl --fail --silent --show-error \
+              --request POST \
+              --user "${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}" \
+              --data-urlencode "To=${SMS_TO_NUMBER}" \
+              --data-urlencode "From=${TWILIO_FROM_NUMBER}" \
+              --data-urlencode "Body=SEO task ${today}: ${issue_url}" \
+              "https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json" \
+              > /dev/null
+          else
+            echo "Twilio secrets are not configured. SMS skipped."
+          fi
