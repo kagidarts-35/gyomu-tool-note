@@ -84,6 +84,10 @@ h2 { margin-top: 2.2em; line-height: 1.35; }
 }
 .cta-button:hover { background: var(--accent-dark); }
 .tracking-pixel { position: absolute; width: 1px; height: 1px; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 600px; }
+th, td { padding: 12px; border: 1px solid var(--line); text-align: left; vertical-align: top; }
+th { background: #f0f6f3; }
 footer { padding: 32px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
 @media (max-width: 620px) {
   header .wrap { align-items: flex-start; flex-direction: column; padding: 16px 0; }
