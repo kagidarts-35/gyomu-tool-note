@@ -1,0 +1,62 @@
+name: Daily SEO task
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create-task:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create today's SEO task
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          today="$(TZ=Asia/Tokyo date +%F)"
+          weekday="$(TZ=Asia/Tokyo date +%u)"
+          title="SEO運用タスク ${today}"
+
+          if gh issue list --repo "$GH_REPO" --search "$title in:title" --state all --json title --jq '.[].title' | grep -Fxq "$title"; then
+            echo "Today's issue already exists."
+            exit 0
+          fi
+
+          case "$weekday" in
+            1)
+              focus="新規記事を1本作成・公開する"
+              details="- 検索意図と公式情報を確認\n- 記事を作成し、収益記事へ内部リンク\n- sitemap.xmlを更新\n- 公開後にURL検査を申請"
+              ;;
+            2)
+              focus="既存記事を1本改善する"
+              details="- Search Consoleの表示回数と検索語を確認\n- タイトル・導入文・見出しを改善\n- 情報の日付と公式リンクを確認\n- 関連記事への内部リンクを追加"
+              ;;
+            3)
+              focus="新規記事を1本作成・公開する"
+              details="- 成約意図に近いロングテール語を選定\n- 一次情報を参照して執筆\n- 広告の有無を明示\n- 公開後にURL検査を申請"
+              ;;
+            4)
+              focus="収益導線と案件条件を点検する"
+              details="- A8の提携・審査状況を確認\n- 報酬、確定率、否認条件を更新\n- 広告リンク切れを確認\n- CTAの表示とリンク先を確認"
+              ;;
+            5)
+              focus="新規記事を1本作成・公開する"
+              details="- 今週の記事群に不足するテーマを選ぶ\n- 公式情報を参照して執筆\n- 既存記事と内容が重複していないか確認\n- sitemap.xmlと内部リンクを更新"
+              ;;
+            6)
+              focus="Search Consoleを週次分析する"
+              details="- クリック、表示回数、CTR、平均掲載順位を記録\n- 表示回数が増えた検索語を抽出\n- 改善対象を1ページ決める\n- 次週の記事候補を3件決める"
+              ;;
+            *)
+              focus="軽い保守と翌週準備を行う"
+              details="- 公開ページと広告リンクを確認\n- 古い料金・日付がないか確認\n- 翌週の3記事の見出し案を準備\n- 作業時間を記録"
+              ;;
+          esac
+
+          body="$(printf '## 今日の重点\n\n%s\n\n## チェックリスト\n\n%b\n\n## 完了条件\n\n- [ ] 今日の重点作業が完了\n- [ ] 変更内容または確認結果をIssueへ記録\n- [ ] 次に行う作業を1行で記録\n\n自動作成: 毎朝9:00 JST' "$focus" "$details")"
+          gh issue create --repo "$GH_REPO" --title "$title" --body "$body"
