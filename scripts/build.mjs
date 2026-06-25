@@ -25,6 +25,7 @@ const layout = ({ title, description, body, canonical = "", prefix = "" }) => `<
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(description)}">
+  ${site.googleSiteVerification ? `<meta name="google-site-verification" content="${esc(site.googleSiteVerification)}">` : ""}
   ${canonical ? `<link rel="canonical" href="${esc(canonical)}">` : ""}
   <link rel="stylesheet" href="${site.baseUrl.includes("YOUR_") ? `${prefix}styles.css` : `${site.baseUrl}/styles.css`}">
 </head>
