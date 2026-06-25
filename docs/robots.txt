@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://kagidarts-35.github.io/gyomu-tool-note/sitemap.xml
