@@ -65,12 +65,19 @@ for (const article of published) {
   const sources = article.sources.map((source) =>
     `<li><a href="${esc(source.url)}" rel="noopener noreferrer">${esc(source.label)}</a></li>`
   ).join("");
+  const affiliateCta = article.affiliateCta ? `
+    <aside class="affiliate-cta" aria-label="広告">
+      <p class="ad-label">広告</p>
+      <p>${esc(article.affiliateCta.note)}</p>
+      <a class="cta-button" href="${esc(article.affiliateCta.url)}" rel="nofollow sponsored">${esc(article.affiliateCta.label)}</a>
+      <img class="tracking-pixel" width="1" height="1" src="${esc(article.affiliateCta.trackingPixel)}" alt="">
+    </aside>` : "";
   const body = `<article>
     <p class="eyebrow">選定ガイド</p><h1>${esc(article.title)}</h1>
     <p class="meta">公開日 ${esc(article.published)}｜更新日 ${esc(article.updated)}</p>
     <p class="disclosure">${esc(article.disclosure)}</p>
     <p class="lead">${esc(article.intro)}</p>${sections}
-    <h2>まとめ</h2><p>${esc(article.conclusion)}</p>
+    <h2>まとめ</h2><p>${esc(article.conclusion)}</p>${affiliateCta}
     <section class="sources"><h2>参照元</h2><ul>${sources}</ul></section>
   </article>`;
   await writeFile(path.join(dist, "articles", `${article.slug}.html`), layout({
