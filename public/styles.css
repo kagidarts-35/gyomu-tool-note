@@ -83,6 +83,10 @@ h2 { margin-top: 2.2em; line-height: 1.35; }
   text-decoration: none;
 }
 .cta-button:hover { background: var(--accent-dark); }
+.cta-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.cta-grid .affiliate-cta { margin: 36px 0; }
+.cta-button-secondary { background: #315bb5; }
+.cta-button-secondary:hover { background: #24468e; }
 .tracking-pixel { position: absolute; width: 1px; height: 1px; }
 .table-wrap { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; min-width: 600px; }
@@ -93,4 +97,6 @@ footer { padding: 32px 0; border-top: 1px solid var(--line); color: var(--muted)
   header .wrap { align-items: flex-start; flex-direction: column; padding: 16px 0; }
   nav { flex-wrap: wrap; }
   main { padding-top: 32px; }
+  .cta-grid { grid-template-columns: 1fr; }
+  .cta-grid .affiliate-cta { margin: 8px 0; }
 }

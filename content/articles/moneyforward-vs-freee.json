@@ -5,7 +5,7 @@
   "published": "2026-06-25",
   "updated": "2026-06-25",
   "status": "published",
-  "disclosure": "この記事にはマネーフォワードの広告リンクが含まれます。freeeには広告リンクを掲載していません。比較結果を報酬の有無だけで変更することはありません。",
+  "disclosure": "この記事にはマネーフォワードとfreeeの広告リンクが含まれます。比較結果や掲載順を報酬額だけで変更することはありません。",
   "intro": "どちらも青色・白色申告、銀行・カード明細の取込、電子申告に対応する個人事業主向けクラウド会計サービスです。料金だけで決めず、入力方法、消費税申告、サポート、周辺業務との連携を確認します。",
   "sections": [
     {
@@ -67,7 +67,13 @@
     "label": "マネーフォワード クラウドの公式情報を確認する",
     "url": "https://px.a8.net/svt/ejp?a8mat=4B648K+B4OQWI+3SPO+C8KZDE",
     "trackingPixel": "https://www15.a8.net/0.gif?a8mat=4B648K+B4OQWI+3SPO+C8KZDE",
-    "note": "マネーフォワードの広告リンクです。freeeの公式ページは参照元から確認できます。"
+    "note": "マネーフォワードの広告リンクです。最新の料金・条件はリンク先でご確認ください。"
+  },
+  "secondaryAffiliateCta": {
+    "label": "freee会計を無料で試す",
+    "url": "https://px.a8.net/svt/ejp?a8mat=4B648K+DYHVCI+3SPO+9FL80Y",
+    "trackingPixel": "https://www16.a8.net/0.gif?a8mat=4B648K+DYHVCI+3SPO+9FL80Y",
+    "note": "freee会計の広告リンクです。最新の無料利用条件・料金はリンク先でご確認ください。"
   },
   "sources": [
     {
