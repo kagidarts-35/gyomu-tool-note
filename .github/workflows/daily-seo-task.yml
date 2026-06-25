@@ -59,4 +59,4 @@ jobs:
           esac
 
           body="$(printf '## 今日の重点\n\n%s\n\n## チェックリスト\n\n%b\n\n## 完了条件\n\n- [ ] 今日の重点作業が完了\n- [ ] 変更内容または確認結果をIssueへ記録\n- [ ] 次に行う作業を1行で記録\n\n自動作成: 毎朝9:00 JST' "$focus" "$details")"
-          gh issue create --repo "$GH_REPO" --title "$title" --body "$body"
+          gh issue create --repo "$GH_REPO" --title "$title" --body "$body" --assignee "kagidarts-35"
